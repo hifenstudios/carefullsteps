@@ -9,29 +9,50 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --navy: #0a1628;
-      --blue: #1a4a8a;
+      /* luxury + mature palette */
+      --navy: #071321;
+      --blue: #15385f;
       --sky: #2d7dd2;
-      --ice: #e8f4ff;
+      --ice: #eef6ff;
       --white: #ffffff;
-      --black: #0d0d0d;
+      --black: #07090d;
       --gold: #c9a84c;
-      --accent: #5ab4f5;
+      --accent: #69c0ff;
     }
 
     html { scroll-behavior: smooth; }
 
     body {
       font-family: 'DM Sans', sans-serif;
-      background: var(--white);
+      background: linear-gradient(180deg, #ffffff 0%, #fbfdff 55%, #ffffff 100%);
       color: var(--navy);
       overflow-x: hidden;
     }
 
+    /* subtle grain for premium feel */
+    body::before{
+      content:'';
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        radial-gradient(circle at 10% 10%, rgba(201,168,76,.06), transparent 40%),
+        radial-gradient(circle at 90% 20%, rgba(105,192,255,.08), transparent 42%),
+        radial-gradient(circle at 30% 90%, rgba(21,56,95,.06), transparent 40%),
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='.08'/%3E%3C/svg%3E");
+      mix-blend-mode: overlay;
+      opacity: .35;
+      z-index: 0;
+    }
+    body > * { position: relative; z-index: 1; }
+
     /* ── HERO ── */
     .hero {
       min-height: 100vh;
-      background: linear-gradient(135deg, var(--navy) 0%, var(--blue) 55%, #1260aa 100%);
+      background:
+        radial-gradient(1200px 600px at 20% 20%, rgba(201,168,76,.14), transparent 55%),
+        radial-gradient(900px 500px at 85% 15%, rgba(105,192,255,.18), transparent 55%),
+        linear-gradient(135deg, var(--navy) 0%, var(--blue) 55%, #0d4f8f 100%);
       position: relative;
       display: flex;
       flex-direction: column;
@@ -67,6 +88,7 @@
       background-size: 60px 60px, 30px 30px;
       background-position: 0 0, 15px 15px;
       pointer-events: none;
+      opacity: .65;
     }
 
     .hero-badge {
@@ -76,12 +98,14 @@
       letter-spacing: .25em;
       text-transform: uppercase;
       color: var(--gold);
-      border: 1px solid var(--gold);
+      border: 1px solid rgba(201,168,76,.75);
       padding: .35rem 1rem;
       border-radius: 100px;
       margin-bottom: 1.4rem;
       display: inline-block;
       animation: fadeDown .8s ease both;
+      background: rgba(7,19,33,.35);
+      backdrop-filter: blur(10px);
     }
 
     .hero h1 {
@@ -135,10 +159,11 @@
       transition: transform .2s, box-shadow .2s;
     }
     .btn:hover { transform: translateY(-3px); box-shadow: 0 12px 32px rgba(0,0,0,.3); }
+    .btn:active { transform: translateY(-1px); }
 
     .btn-primary {
-      background: var(--accent);
-      color: var(--navy);
+      background: linear-gradient(135deg, var(--accent), #9bddff);
+      color: #071321;
       border: none;
     }
     .btn-outline {
@@ -146,6 +171,7 @@
       color: var(--white);
       border: 2px solid rgba(255,255,255,.5);
     }
+    .btn-outline:hover { border-color: rgba(201,168,76,.85); color: #fff; }
 
     /* shoe float */
     .hero-shoe {
@@ -174,6 +200,7 @@
     nav.scrolled {
       background: rgba(10,22,40,.92);
       backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255,255,255,.08);
     }
     .nav-logo {
       font-family: 'Bebas Neue', sans-serif;
@@ -188,9 +215,26 @@
       text-decoration: none;
       font-weight: 500;
       font-size: .9rem;
-      transition: color .2s;
+      transition: color .2s, opacity .2s;
+      position: relative;
     }
     .nav-links a:hover { color: var(--accent); }
+    .nav-links a::after{
+      content:'';
+      position:absolute;
+      left:0; right:0;
+      bottom:-8px;
+      height:2px;
+      border-radius: 2px;
+      background: linear-gradient(90deg, var(--gold), var(--accent));
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform .25s ease;
+      opacity: .9;
+    }
+    .nav-links a:hover::after,
+    .nav-links a.active::after { transform: scaleX(1); }
+    .nav-links a.active { color: rgba(255,255,255,.92); }
 
     /* ── SERVICES ── */
     .section { padding: 5rem 1.5rem; }
@@ -240,6 +284,10 @@
     }
     .service-card:hover { transform: translateY(-8px); box-shadow: 0 20px 50px rgba(26,74,138,.15); border-color: var(--accent); }
     .service-card:hover::before { transform: scaleX(1); }
+
+    /* tasteful interactive tilt (mouse only) */
+    .tilt { transform-style: preserve-3d; }
+    .tilt:hover { box-shadow: 0 28px 70px rgba(10,22,40,.18); }
 
     .service-icon {
       font-size: 2.8rem;
@@ -503,6 +551,292 @@
       height: 4px;
       background: linear-gradient(90deg, var(--sky), var(--accent), var(--gold));
     }
+
+    /* ── GALLERY ── */
+    .gallery {
+      background: linear-gradient(180deg, #ffffff 0%, #fbfdff 40%, #ffffff 100%);
+    }
+    .gallery-top {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-top: .8rem;
+    }
+    .gallery-actions { display:flex; gap:.7rem; }
+    .chip {
+      display:inline-flex;
+      align-items:center;
+      gap:.55rem;
+      padding:.55rem .9rem;
+      border-radius: 999px;
+      border: 1px solid rgba(10,22,40,.12);
+      background: rgba(255,255,255,.7);
+      backdrop-filter: blur(10px);
+      color: rgba(10,22,40,.85);
+      font-weight: 600;
+      font-size: .88rem;
+      cursor: pointer;
+      transition: transform .2s, box-shadow .2s, border-color .2s;
+      user-select: none;
+    }
+    .chip:hover { transform: translateY(-2px); box-shadow: 0 14px 40px rgba(10,22,40,.10); border-color: rgba(105,192,255,.65); }
+
+    .gallery-rail {
+      margin-top: 2rem;
+      display: grid;
+      grid-auto-flow: column;
+      grid-auto-columns: minmax(260px, 1fr);
+      gap: 1rem;
+      overflow-x: auto;
+      padding-bottom: .7rem;
+      scroll-snap-type: x mandatory;
+      scrollbar-width: thin;
+      -webkit-overflow-scrolling: touch;
+    }
+    .gallery-rail::-webkit-scrollbar{ height: 10px; }
+    .gallery-rail::-webkit-scrollbar-thumb{ background: rgba(21,56,95,.18); border-radius: 999px; }
+
+    .shot {
+      scroll-snap-align: start;
+      border-radius: 22px;
+      overflow: hidden;
+      border: 1px solid rgba(10,22,40,.10);
+      background: rgba(255,255,255,.85);
+      box-shadow: 0 18px 60px rgba(10,22,40,.08);
+      transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+      cursor: pointer;
+      position: relative;
+    }
+    .shot:hover { transform: translateY(-6px); border-color: rgba(105,192,255,.55); box-shadow: 0 26px 80px rgba(10,22,40,.12); }
+    .shot-media {
+      aspect-ratio: 4 / 3;
+      width: 100%;
+      display: block;
+      background:
+        radial-gradient(700px 300px at 30% 25%, rgba(201,168,76,.18), transparent 55%),
+        radial-gradient(700px 300px at 80% 20%, rgba(105,192,255,.18), transparent 55%),
+        linear-gradient(135deg, rgba(7,19,33,.10), rgba(21,56,95,.06));
+      object-fit: cover;
+    }
+    .shot-body{ padding: 1rem 1.1rem 1.2rem; }
+    .shot-title{
+      font-family:'Bebas Neue', sans-serif;
+      letter-spacing:.05em;
+      font-size: 1.35rem;
+      color: var(--navy);
+    }
+    .shot-sub{
+      margin-top: .25rem;
+      color:#5a6a80;
+      font-size:.9rem;
+      line-height: 1.55;
+    }
+    .shot-tag{
+      position:absolute;
+      top: .9rem; left: .9rem;
+      padding:.32rem .65rem;
+      border-radius: 999px;
+      background: rgba(7,19,33,.55);
+      border: 1px solid rgba(255,255,255,.16);
+      color: rgba(255,255,255,.9);
+      font-size: .75rem;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      backdrop-filter: blur(10px);
+    }
+
+    .modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(7,9,13,.65);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 1.2rem;
+      z-index: 999;
+      backdrop-filter: blur(8px);
+    }
+    .modal.open { display: flex; }
+    .modal-card{
+      width: min(980px, 100%);
+      border-radius: 26px;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.94);
+      box-shadow: 0 30px 120px rgba(0,0,0,.35);
+      transform: translateY(10px);
+      opacity: 0;
+      animation: modalIn .26s ease forwards;
+    }
+    @keyframes modalIn{
+      to { transform: translateY(0); opacity: 1; }
+    }
+    .modal-img{
+      width: 100%;
+      max-height: min(62vh, 560px);
+      object-fit: cover;
+      display: block;
+      background: linear-gradient(135deg, rgba(7,19,33,.10), rgba(21,56,95,.06));
+    }
+    .modal-meta{
+      padding: 1.1rem 1.2rem 1.3rem;
+      display:flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .modal-meta strong{ color: var(--navy); font-size: 1.05rem; }
+    .modal-close{
+      appearance: none;
+      border: 1px solid rgba(10,22,40,.14);
+      background: rgba(255,255,255,.7);
+      padding: .55rem .9rem;
+      border-radius: 999px;
+      cursor: pointer;
+      font-weight: 700;
+      transition: transform .15s ease, box-shadow .15s ease, border-color .2s ease;
+    }
+    .modal-close:hover{ transform: translateY(-1px); box-shadow: 0 12px 30px rgba(10,22,40,.12); border-color: rgba(105,192,255,.6); }
+
+    /* ── FAQ ── */
+    .faq { background: linear-gradient(180deg, #ffffff 0%, #f7fbff 55%, #ffffff 100%); }
+    .faq-wrap{
+      max-width: 900px;
+      margin: 2.8rem auto 0;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: .9rem;
+      text-align: left;
+    }
+    .qa{
+      border-radius: 18px;
+      border: 1px solid rgba(10,22,40,.10);
+      background: rgba(255,255,255,.86);
+      box-shadow: 0 16px 50px rgba(10,22,40,.07);
+      overflow: hidden;
+    }
+    .qa button{
+      width: 100%;
+      text-align: left;
+      padding: 1.05rem 1.1rem;
+      background: transparent;
+      border: 0;
+      cursor: pointer;
+      display:flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      color: var(--navy);
+      font-weight: 700;
+      font-size: 1rem;
+    }
+    .qa button span{
+      display:flex;
+      gap: .7rem;
+      align-items: center;
+    }
+    .qa .ico{
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+      display:grid;
+      place-items: center;
+      background: linear-gradient(135deg, rgba(105,192,255,.18), rgba(201,168,76,.14));
+      border: 1px solid rgba(10,22,40,.08);
+      font-size: 1rem;
+      flex: 0 0 auto;
+    }
+    .qa .chev{
+      width: 38px; height: 38px;
+      border-radius: 999px;
+      display:grid;
+      place-items: center;
+      border: 1px solid rgba(10,22,40,.10);
+      background: rgba(255,255,255,.65);
+      transition: transform .2s ease, border-color .2s ease;
+      flex: 0 0 auto;
+    }
+    .qa[aria-expanded="true"] .chev{ transform: rotate(180deg); border-color: rgba(105,192,255,.55); }
+
+    .qa .answer{
+      padding: 0 1.1rem 1.1rem;
+      color: #4e5f76;
+      line-height: 1.75;
+      font-size: .95rem;
+      display: none;
+    }
+    .qa[aria-expanded="true"] .answer{ display: block; }
+
+    /* contact actions */
+    .contact-actions{
+      margin-top: 1.4rem;
+      display:flex;
+      gap: .8rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .btn-dark{
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(255,255,255,.14);
+      color: rgba(255,255,255,.92);
+    }
+    .btn-dark:hover{ border-color: rgba(201,168,76,.75); box-shadow: 0 14px 40px rgba(0,0,0,.35); }
+    .btn-whatsapp{
+      background: linear-gradient(135deg, #25D366, #65f0a8);
+      color: #062013;
+      border: none;
+    }
+
+    footer a { color: var(--accent); text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+
+    /* accessible motion preferences */
+    @media (prefers-reduced-motion: reduce){
+      html { scroll-behavior: auto; }
+      * { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; }
+    }
+
+    /* floating WhatsApp */
+    .wa-float{
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      z-index: 998;
+      display:flex;
+      align-items:center;
+      gap: .65rem;
+      padding: .8rem 1rem;
+      border-radius: 999px;
+      text-decoration: none;
+      background: rgba(7,9,13,.55);
+      border: 1px solid rgba(255,255,255,.14);
+      color: rgba(255,255,255,.92);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 22px 70px rgba(0,0,0,.35);
+      transform: translateY(0);
+      transition: transform .2s ease, border-color .2s ease, background .2s ease;
+    }
+    .wa-float:hover{
+      transform: translateY(-3px);
+      border-color: rgba(37,211,102,.55);
+      background: rgba(7,9,13,.65);
+    }
+    .wa-dot{
+      width: 44px;
+      height: 44px;
+      border-radius: 999px;
+      display:grid;
+      place-items: center;
+      background: linear-gradient(135deg, #25D366, #65f0a8);
+      color: #062013;
+      font-weight: 900;
+      box-shadow: 0 12px 40px rgba(37,211,102,.22);
+    }
+    .wa-text small{ display:block; opacity: .7; font-weight: 600; font-size: .72rem; letter-spacing: .12em; text-transform: uppercase; }
+    .wa-text strong{ display:block; font-size: .95rem; letter-spacing: .02em; }
   </style>
 </head>
 <body>
@@ -512,8 +846,10 @@
     <div class="nav-logo">Careful <span>Steps</span>™</div>
     <ul class="nav-links">
       <li><a href="#services">Services</a></li>
+      <li><a href="#gallery">Gallery</a></li>
       <li><a href="#pricing">Pricing</a></li>
       <li><a href="#how">How It Works</a></li>
+      <li><a href="#faqs">FAQs</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
   </nav>
@@ -529,7 +865,7 @@
 
     <div class="hero-cta">
       <a href="#pricing" class="btn btn-primary">See Pricing</a>
-      <a href="#contact" class="btn btn-outline">Call Us Today</a>
+      <a href="#contact" class="btn btn-outline">Call / WhatsApp</a>
     </div>
 
   </section>
@@ -575,6 +911,99 @@
   </section>
 
   <div class="divider"></div>
+
+  <!-- GALLERY -->
+  <section class="section gallery" id="gallery">
+    <div class="container">
+      <div style="text-align:center;">
+        <span class="section-label reveal">Fresh Results</span>
+        <h2 class="section-title reveal">Sneaker Gallery</h2>
+        <p class="reveal" style="color:#5a6a80;max-width:620px;margin:.8rem auto 0;font-size:1rem;line-height:1.7;">
+          A quick look at the vibe. Tap a card to view it bigger — and when you're ready, swap these with your own before/after shots.
+        </p>
+      </div>
+
+      <div class="gallery-top reveal">
+        <div style="color:#5a6a80;max-width:620px;line-height:1.7;">
+          <strong style="color:var(--navy);">Tip:</strong> replace the image <span style="font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,'Liberation Mono','Courier New',monospace;">src</span> with your own photos (or ask me and I’ll wire up an upload button).
+        </div>
+        <div class="gallery-actions">
+          <button class="chip" type="button" id="galleryPrev">← Slide</button>
+          <button class="chip" type="button" id="galleryNext">Slide →</button>
+        </div>
+      </div>
+
+      <div class="gallery-rail reveal" id="galleryRail" aria-label="Sneaker images">
+        <article class="shot" data-title="Deep Wash — Crisp Finish">
+          <div class="shot-tag">Deep Wash</div>
+          <img class="shot-media" alt="Sneaker cleaning placeholder 1" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1200' height='900'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop stop-color='%23071321'/%3E%3Cstop offset='0.55' stop-color='%2315385f'/%3E%3Cstop offset='1' stop-color='%2369c0ff'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='1200' height='900' fill='url(%23g)'/%3E%3Ccircle cx='280' cy='260' r='220' fill='%23c9a84c' opacity='0.22'/%3E%3Ccircle cx='900' cy='260' r='220' fill='%2369c0ff' opacity='0.20'/%3E%3Crect x='150' y='520' width='900' height='180' rx='28' fill='white' opacity='0.10'/%3E%3Ctext x='50%25' y='56%25' text-anchor='middle' font-family='DM Sans, Arial' font-size='44' fill='white' opacity='0.9'%3EAdd your sneaker photo%3C/text%3E%3Ctext x='50%25' y='62%25' text-anchor='middle' font-family='DM Sans, Arial' font-size='24' fill='white' opacity='0.7'%3E1200 × 900 works great%3C/text%3E%3C/svg%3E">
+          <div class="shot-body">
+            <div class="shot-title">Deep Wash — Crisp Finish</div>
+            <div class="shot-sub">Perfect for everyday dirt, dust, and odour. Clean inside + outside.</div>
+          </div>
+        </article>
+
+        <article class="shot" data-title="Whitening — Bring Back the White">
+          <div class="shot-tag">Whitening</div>
+          <img class="shot-media" alt="Sneaker cleaning placeholder 2" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1200' height='900'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop stop-color='%23ffffff'/%3E%3Cstop offset='0.35' stop-color='%23eef6ff'/%3E%3Cstop offset='1' stop-color='%2315385f'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='1200' height='900' fill='url(%23g)'/%3E%3Ccircle cx='360' cy='310' r='240' fill='%2369c0ff' opacity='0.18'/%3E%3Ccircle cx='880' cy='260' r='220' fill='%23c9a84c' opacity='0.16'/%3E%3Crect x='150' y='520' width='900' height='180' rx='28' fill='%23071321' opacity='0.10'/%3E%3Ctext x='50%25' y='56%25' text-anchor='middle' font-family='DM Sans, Arial' font-size='44' fill='%23071321' opacity='0.82'%3EYour before/after slot%3C/text%3E%3Ctext x='50%25' y='62%25' text-anchor='middle' font-family='DM Sans, Arial' font-size='24' fill='%23071321' opacity='0.62'%3EReplace this image%3C/text%3E%3C/svg%3E">
+          <div class="shot-body">
+            <div class="shot-title">Whitening — Bring Back the White</div>
+            <div class="shot-sub">For soles and uppers that lost their shine. Clean, bright, and neat.</div>
+          </div>
+        </article>
+
+        <article class="shot" data-title="Suede — Soft Touch Cleaning">
+          <div class="shot-tag">Suede</div>
+          <img class="shot-media" alt="Sneaker cleaning placeholder 3" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1200' height='900'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop stop-color='%23071321'/%3E%3Cstop offset='0.5' stop-color='%23c9a84c'/%3E%3Cstop offset='1' stop-color='%2369c0ff'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='1200' height='900' fill='url(%23g)'/%3E%3Crect x='110' y='150' width='980' height='600' rx='46' fill='white' opacity='0.10'/%3E%3Ctext x='50%25' y='52%25' text-anchor='middle' font-family='DM Sans, Arial' font-size='44' fill='white' opacity='0.9'%3ESuede / Nubuck Slot%3C/text%3E%3Ctext x='50%25' y='58%25' text-anchor='middle' font-family='DM Sans, Arial' font-size='24' fill='white' opacity='0.7'%3ETap to preview%3C/text%3E%3C/svg%3E">
+          <div class="shot-body">
+            <div class="shot-title">Suede — Soft Touch Cleaning</div>
+            <div class="shot-sub">Delicate care that protects texture and keeps the colour looking rich.</div>
+          </div>
+        </article>
+
+        <article class="shot" data-title="Restoration — Back in Rotation">
+          <div class="shot-tag">Restoration</div>
+          <img class="shot-media" alt="Sneaker cleaning placeholder 4" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1200' height='900'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='1' x2='1' y2='0'%3E%3Cstop stop-color='%2315385f'/%3E%3Cstop offset='0.55' stop-color='%23071321'/%3E%3Cstop offset='1' stop-color='%23c9a84c'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='1200' height='900' fill='url(%23g)'/%3E%3Ccircle cx='320' cy='320' r='240' fill='white' opacity='0.10'/%3E%3Ccircle cx='880' cy='320' r='240' fill='white' opacity='0.08'/%3E%3Ctext x='50%25' y='56%25' text-anchor='middle' font-family='DM Sans, Arial' font-size='44' fill='white' opacity='0.9'%3ERestoration Slot%3C/text%3E%3Ctext x='50%25' y='62%25' text-anchor='middle' font-family='DM Sans, Arial' font-size='24' fill='white' opacity='0.7'%3EReplace the placeholder%3C/text%3E%3C/svg%3E">
+          <div class="shot-body">
+            <div class="shot-title">Restoration — Back in Rotation</div>
+            <div class="shot-sub">When your pair needs more than a wash. Clean-up + revive the details.</div>
+          </div>
+        </article>
+
+        <article class="shot" data-title="Laces + Detail Clean — Finishing Touches">
+          <div class="shot-tag">Details</div>
+          <img class="shot-media" alt="Sneaker cleaning placeholder 5" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1200' height='900'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop stop-color='%23071321'/%3E%3Cstop offset='0.55' stop-color='%232d7dd2'/%3E%3Cstop offset='1' stop-color='%23ffffff'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='1200' height='900' fill='url(%23g)'/%3E%3Crect x='130' y='170' width='940' height='560' rx='42' fill='%23071321' opacity='0.10'/%3E%3Ctext x='50%25' y='52%25' text-anchor='middle' font-family='DM Sans, Arial' font-size='44' fill='white' opacity='0.9'%3EDetail Shot Slot%3C/text%3E%3Ctext x='50%25' y='58%25' text-anchor='middle' font-family='DM Sans, Arial' font-size='24' fill='white' opacity='0.7'%3ELaces, stitching, soles%3C/text%3E%3C/svg%3E">
+          <div class="shot-body">
+            <div class="shot-title">Laces + Detail Clean</div>
+            <div class="shot-sub">It’s the small things: edges, stitches, soles, and lace work.</div>
+          </div>
+        </article>
+
+        <article class="shot" data-title="Client Favourite — Ready to Wear">
+          <div class="shot-tag">Fresh</div>
+          <img class="shot-media" alt="Sneaker cleaning placeholder 6" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1200' height='900'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='1' x2='1' y2='0'%3E%3Cstop stop-color='%23ffffff'/%3E%3Cstop offset='0.4' stop-color='%23eef6ff'/%3E%3Cstop offset='1' stop-color='%2369c0ff'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='1200' height='900' fill='url(%23g)'/%3E%3Ccircle cx='640' cy='350' r='290' fill='%2315385f' opacity='0.10'/%3E%3Ctext x='50%25' y='56%25' text-anchor='middle' font-family='DM Sans, Arial' font-size='44' fill='%23071321' opacity='0.82'%3EAnother Photo Slot%3C/text%3E%3Ctext x='50%25' y='62%25' text-anchor='middle' font-family='DM Sans, Arial' font-size='24' fill='%23071321' opacity='0.62'%3EYour best results here%3C/text%3E%3C/svg%3E">
+          <div class="shot-body">
+            <div class="shot-title">Client Favourite — Ready to Wear</div>
+            <div class="shot-sub">Use this slot for your strongest before/after moment.</div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- gallery modal -->
+  <div class="modal" id="galleryModal" aria-hidden="true">
+    <div class="modal-card" role="dialog" aria-modal="true" aria-label="Image preview">
+      <img class="modal-img" id="modalImg" alt="Preview image">
+      <div class="modal-meta">
+        <div>
+          <strong id="modalTitle">Preview</strong>
+          <div style="margin-top:.25rem;color:#5a6a80;">Tap outside or press ESC to close.</div>
+        </div>
+        <button class="modal-close" type="button" id="modalClose">Close</button>
+      </div>
+    </div>
+  </div>
 
   <!-- WHY US -->
   <section class="section why" id="why">
@@ -672,13 +1101,78 @@
     </div>
   </section>
 
+  <div class="divider"></div>
+
+  <!-- FAQS -->
+  <section class="section faq" id="faqs">
+    <div class="container" style="text-align:center;">
+      <span class="section-label reveal">Knowledge</span>
+      <h2 class="section-title reveal">FAQs + Cleaning Tips</h2>
+      <p class="reveal" style="color:#5a6a80;max-width:680px;margin:.8rem auto 0;font-size:1rem;line-height:1.7;">
+        Clean sneakers last longer and look better. Here are quick facts and tips you can actually use — simple, safe, and effective.
+      </p>
+
+      <div class="faq-wrap">
+        <div class="qa reveal" aria-expanded="false">
+          <button type="button">
+            <span><span class="ico">🧼</span>What’s the safest way to clean white sneakers?</span>
+            <span class="chev">⌄</span>
+          </button>
+          <div class="answer">
+            Use a soft brush + mild soap and cool water. Avoid harsh bleach (it can yellow material over time). Air-dry in shade — direct sun can cause discolouring.
+          </div>
+        </div>
+
+        <div class="qa reveal" aria-expanded="false">
+          <button type="button">
+            <span><span class="ico">🪶</span>How do I clean suede without ruining it?</span>
+            <span class="chev">⌄</span>
+          </button>
+          <div class="answer">
+            Keep suede as dry as possible. Use a suede brush and spot-clean gently. If it’s soaked or badly stained, don’t scrub hard — that flattens the nap and fades colour.
+          </div>
+        </div>
+
+        <div class="qa reveal" aria-expanded="false">
+          <button type="button">
+            <span><span class="ico">👟</span>How often should I clean my sneakers?</span>
+            <span class="chev">⌄</span>
+          </button>
+          <div class="answer">
+            Light wipe-down weekly, deep clean every 3–6 weeks if you wear them often. The earlier you remove dirt, the easier it is — and the less wear you cause.
+          </div>
+        </div>
+
+        <div class="qa reveal" aria-expanded="false">
+          <button type="button">
+            <span><span class="ico">✨</span>Why do soles turn yellow and how can I prevent it?</span>
+            <span class="chev">⌄</span>
+          </button>
+          <div class="answer">
+            Oxidation + UV exposure is the main cause. Store sneakers in a cool, dry place away from sun, and keep them clean. A proper whitening treatment helps when yellowing already happened.
+          </div>
+        </div>
+
+        <div class="qa reveal" aria-expanded="false">
+          <button type="button">
+            <span><span class="ico">🧴</span>What should I never use on sneakers?</span>
+            <span class="chev">⌄</span>
+          </button>
+          <div class="answer">
+            Avoid hot water, strong bleach, and rough scrubbing pads. Heat can warp glues and materials. Harsh chemicals can strip finishes and cause yellowing or cracking.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- CONTACT -->
   <section class="section contact" id="contact">
     <div class="container">
       <span class="section-label reveal">Get In Touch</span>
       <h2 class="section-title reveal">Ready For Fresh Kicks?</h2>
       <p class="reveal" style="color:rgba(255,255,255,.6);max-width:440px;margin:.8rem auto 0;font-size:1rem;line-height:1.7;">
-        Give us a call and we'll sort you out. It's that simple.
+        Give us a call or drop a WhatsApp. We'll sort you out — quick, clean, and professional.
       </p>
 
       <div class="contact-box reveal">
@@ -689,6 +1183,11 @@
         <a class="phone-link" href="tel:0603776461">060 377 6461</a>
         <p class="contact-note">Mon – Sat &nbsp;|&nbsp; 8:00 AM – 6:00 PM</p>
         <p class="contact-owner">Owned by <strong>Raees Apollos</strong> — Durban's sneaker care specialist.</p>
+
+        <div class="contact-actions">
+          <a class="btn btn-dark" href="tel:0603776461">Call Now</a>
+          <a class="btn btn-whatsapp" href="https://wa.me/27603776461?text=Hi%20Raees%2C%20I%E2%80%99d%20like%20to%20book%20a%20sneaker%20clean%20please." target="_blank" rel="noopener">WhatsApp Raees</a>
+        </div>
       </div>
     </div>
   </section>
@@ -700,6 +1199,15 @@
         Sneaker Cleaning &amp; Restoration. All rights reserved.</p>
     <p style="margin-top:.4rem;"><em>"We take the steps so you don't have to."</em></p>
   </footer>
+
+  <!-- floating WhatsApp -->
+  <a class="wa-float" href="https://wa.me/27603776461?text=Hi%20Raees%2C%20I%E2%80%99d%20like%20to%20book%20a%20sneaker%20clean%20please." target="_blank" rel="noopener" aria-label="WhatsApp Raees Apollos">
+    <span class="wa-dot">WA</span>
+    <span class="wa-text">
+      <small>WhatsApp</small>
+      <strong>Raees Apollos</strong>
+    </span>
+  </a>
 
   <script>
     // Sticky nav
@@ -733,6 +1241,85 @@
     }, { threshold: 0.15 });
 
     document.querySelectorAll('.reveal, .step').forEach(el => observer.observe(el));
+
+    // nav active link (based on section in view)
+    const navLinks = Array.from(document.querySelectorAll('.nav-links a'));
+    const sections = navLinks
+      .map(a => document.querySelector(a.getAttribute('href')))
+      .filter(Boolean);
+
+    const navObserver = new IntersectionObserver((entries) => {
+      const visible = entries
+        .filter(e => e.isIntersecting)
+        .sort((a,b) => b.intersectionRatio - a.intersectionRatio)[0];
+      if (!visible) return;
+      navLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === `#${visible.target.id}`));
+    }, { rootMargin: '-35% 0px -55% 0px', threshold: [0.12, 0.22, 0.35] });
+    sections.forEach(s => navObserver.observe(s));
+
+    // FAQ accordion
+    document.querySelectorAll('.qa').forEach((qa) => {
+      const btn = qa.querySelector('button');
+      btn.addEventListener('click', () => {
+        const open = qa.getAttribute('aria-expanded') === 'true';
+        // keep it tidy: close others
+        document.querySelectorAll('.qa[aria-expanded="true"]').forEach(other => {
+          if (other !== qa) other.setAttribute('aria-expanded', 'false');
+        });
+        qa.setAttribute('aria-expanded', open ? 'false' : 'true');
+      });
+    });
+
+    // Gallery rail controls + modal preview
+    const rail = document.getElementById('galleryRail');
+    const prevBtn = document.getElementById('galleryPrev');
+    const nextBtn = document.getElementById('galleryNext');
+    const modal = document.getElementById('galleryModal');
+    const modalImg = document.getElementById('modalImg');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalClose = document.getElementById('modalClose');
+
+    function slideRail(dir){
+      const card = rail?.querySelector('.shot');
+      if (!card) return;
+      const w = card.getBoundingClientRect().width + 16; // include gap
+      rail.scrollBy({ left: dir * w, behavior: 'smooth' });
+    }
+    prevBtn?.addEventListener('click', () => slideRail(-1));
+    nextBtn?.addEventListener('click', () => slideRail(1));
+
+    rail?.addEventListener('click', (e) => {
+      const card = e.target.closest('.shot');
+      if (!card) return;
+      const img = card.querySelector('img');
+      modalImg.src = img.src;
+      modalTitle.textContent = card.dataset.title || 'Preview';
+      modal.classList.add('open');
+      modal.setAttribute('aria-hidden', 'false');
+    });
+    function closeModal(){
+      modal.classList.remove('open');
+      modal.setAttribute('aria-hidden', 'true');
+    }
+    modalClose?.addEventListener('click', closeModal);
+    modal?.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
+    window.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
+
+    // premium microinteraction: subtle tilt for cards (mouse only)
+    const tilts = document.querySelectorAll('.service-card, .shot');
+    tilts.forEach((el) => {
+      el.classList.add('tilt');
+      el.addEventListener('mousemove', (ev) => {
+        if (window.matchMedia('(hover: none)').matches) return;
+        const r = el.getBoundingClientRect();
+        const x = (ev.clientX - r.left) / r.width - 0.5;
+        const y = (ev.clientY - r.top) / r.height - 0.5;
+        el.style.transform = `translateY(-6px) rotateX(${(-y * 6).toFixed(2)}deg) rotateY(${(x * 8).toFixed(2)}deg)`;
+      });
+      el.addEventListener('mouseleave', () => {
+        el.style.transform = '';
+      });
+    });
   </script>
 </body>
 </html>
